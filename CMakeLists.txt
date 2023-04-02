@@ -26,3 +26,17 @@ set(platform_cmake_file "${CMAKE_CURRENT_SOURCE_DIR}/cmake/${COOL_GAME_PLATFORM}
 if (EXISTS "${platform_cmake_file}")
 	include("${platform_cmake_file}")
 endif()
+
+file(GLOB common_sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+file(GLOB common_headers CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp")
+file(GLOB platform_sources CONFIGURE_DEPENDS "${platform_path}/*.cpp")
+file(GLOB platform_headers CONFIGURE_DEPENDS "${platform_path}/*.hpp")
+
+add_executable(cool-game
+	${common_sources} ${common_headers} ${platform_sources} ${platform_headers})
+
+target_compile_features(cool-game PRIVATE cxx_std_17)
+
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/external/etl/")
+target_link_libraries(cool-game PRIVATE etl::etl)
+target_compile_definitions(cool-game PRIVATE ETL_NO_STL)
