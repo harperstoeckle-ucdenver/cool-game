@@ -1,3 +1,6 @@
 [submodule "cmake/Arduino-CMake-Toolchain"]
 	path = cmake/Arduino-CMake-Toolchain
 	url = https://github.com/a9183756-gh/Arduino-CMake-Toolchain.git
+[submodule "external/etl"]
+	path = external/etl
+	url = https://github.com/ETLCPP/etl.git
