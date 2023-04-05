@@ -37,6 +37,7 @@ file(GLOB platform_headers CONFIGURE_DEPENDS "${platform_path}/*.hpp")
 add_executable(cool-game
 	${common_sources} ${common_headers} ${platform_sources} ${platform_headers})
 
+target_include_directories(cool-game PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src/")
 target_compile_features(cool-game PRIVATE cxx_std_17)
 target_compile_options(cool-game PRIVATE -nostdinc++ -Wall -Wextra -pedantic -Wconversion)
 target_link_options(cool-game PRIVATE -nostdlib++)
