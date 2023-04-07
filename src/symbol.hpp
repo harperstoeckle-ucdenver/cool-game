@@ -33,4 +33,7 @@ union Symbol
 };
 static_assert(sizeof(Symbol) == 1);
 
+// Get the block bit at the given row and column.
+auto block_bit(Symbol s, int row, int col) -> bool;
+
 #endif

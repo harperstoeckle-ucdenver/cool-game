@@ -42,6 +42,15 @@ auto symbol_to_utf8(Symbol s) -> Utf8Char
 
 auto main() -> int
 {
-	puts(symbol_to_utf8({.b = {1, 0, 0b110010}}).c_str());
+	auto const s = Symbol{.b = {1, 0, 0b110110}};
+
+	for (int i : {0, 1, 2})
+	{
+		for (int j : {0, 1})
+		{
+			putchar(block_bit(s, i, j) ? '#' : ' ');
+		}
+		putchar('\n');
+	}
 	return 0;
 }
