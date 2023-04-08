@@ -5,6 +5,7 @@
 
 #include <etl/flat_map.h>
 #include <etl/string.h>
+#include <ncurses.h>
 
 using Utf8Char = etl::string<5>;
 
@@ -42,15 +43,17 @@ auto symbol_to_utf8(Symbol s) -> Utf8Char
 
 auto main() -> int
 {
-	auto const s = Symbol{.b = {1, 0, 0b110110}};
+	initscr();
+	noecho();
+	keypad(stdscr, true);
+	cbreak();
+	curs_set(0);
 
-	for (int i : {0, 1, 2})
-	{
-		for (int j : {0, 1})
-		{
-			putchar(block_bit(s, i, j) ? '#' : ' ');
-		}
-		putchar('\n');
-	}
-	return 0;
+	int rows, cols;
+	getmaxyx(stdscr, rows, cols);
+
+	mvprintw(rows / 2, cols / 2, symbol_to_utf8({.b = {1, 0, 0b110111}}).c_str());
+	getch();
+
+	endwin();
 }
