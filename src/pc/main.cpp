@@ -1,3 +1,5 @@
+#include "game.hpp"
+#include "puzzle.hpp"
 #include "symbol.hpp"
 
 #include <stddef.h>

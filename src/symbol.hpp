@@ -5,8 +5,9 @@
 
 enum struct SymbolType : uint8_t
 {
+	remove,
 	flip_up_down,
-	flip_left_right,
+	flip_left_right
 };
 
 struct SpecialSymbol
