@@ -33,11 +33,17 @@ auto is_solved(Puzzle const& p) -> bool
 				break;
 				
 			case SymbolType::flip_up_down:
-				// TODO: implement flip up down.
+				for (int const c : {0, 1})
+				{
+					swap_block_bits(s, 0, c, 2, c);
+				}
 				break;
 
 			case SymbolType::flip_left_right:
-				// TODO: implement flip left right.
+				for (int const r : {0, 1, 2})
+				{
+					swap_block_bits(s, r, 0, r, 1);
+				}
 				break;
 			}
 		}
