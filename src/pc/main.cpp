@@ -105,5 +105,5 @@ auto main() -> int
 
 	endwin();
 
-	return 0;
+	return is_solved(p);
 }
