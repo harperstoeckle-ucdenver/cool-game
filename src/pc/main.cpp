@@ -86,9 +86,9 @@ auto main() -> int
 	curs_set(0);
 
 	Puzzle p = {
-		{.s = {0, 0, 1, 1, SymbolType::flip_up_down}},
-		{.b = {1, 0, 0b111010}},
-		{.s = {0, 0, 1, 1, SymbolType::flip_left_right}}
+		make_block(0b111011),
+		make_block(0b101110),
+		make_special(true, false, SymbolType::flip_left_right)
 	};
 
 	clear();

@@ -43,4 +43,18 @@ void set_block_bit(Symbol& s, int row, int col, bool v);
 // Swap bits (r0, c0) and (r1, c1).
 void swap_block_bits(Symbol& s, int r0, int c0, int r1, int c1);
 
+// Construct a block symbol.
+inline
+auto make_block(uint8_t bits, bool locked = false) -> Symbol
+{
+	return {.b = {1, locked, bits}};
+}
+
+// Construct a special symbol.
+inline
+auto make_special(bool left, bool right, SymbolType type, bool locked = false) -> Symbol
+{
+	return {.s = {0, locked, left, right, type}};
+}
+
 #endif
