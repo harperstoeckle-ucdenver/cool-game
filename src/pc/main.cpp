@@ -2,6 +2,7 @@
 #include "puzzle.hpp"
 #include "symbol.hpp"
 
+#include <locale.h>
 #include <stddef.h>
 #include <stdio.h>
 
@@ -12,6 +13,7 @@
 using Utf8Char = etl::string<5>;
 
 // Return a string with the utf-8 representation of the symbol.
+static
 auto symbol_to_utf8(Symbol s) -> Utf8Char
 {
 	// Map a type to a symbol.
@@ -43,19 +45,65 @@ auto symbol_to_utf8(Symbol s) -> Utf8Char
 	return c;
 }
 
+static
+void draw_puzzle(Puzzle const& p)
+{
+	int i = 0;
+	for (auto s : p)
+	{
+		if (!s.is_block)
+		{
+			char const* arrow_str;
+			switch (2 * s.s.left + s.s.right)
+			{
+			case 0b00: arrow_str = ""; break;
+			case 0b01: arrow_str = "→"; break;
+			case 0b10: arrow_str = "←"; break;
+			case 0b11: arrow_str = "↔"; break;
+			}
+			mvprintw(0, i, arrow_str);
+		}
+
+		if (s.b.is_locked)
+		{
+			mvprintw(2, i, "⬢");
+		}
+
+		mvprintw(1, i, symbol_to_utf8(s).c_str());
+
+		i += 2;
+	}
+}
+
 auto main() -> int
 {
+	setlocale(LC_ALL, "");
+
 	initscr();
 	noecho();
 	keypad(stdscr, true);
 	cbreak();
 	curs_set(0);
 
-	int rows, cols;
-	getmaxyx(stdscr, rows, cols);
+	Puzzle p = {
+		{.s = {0, 0, 1, 1, SymbolType::flip_up_down}},
+		{.b = {1, 0, 0b111010}},
+		{.s = {0, 0, 1, 1, SymbolType::flip_left_right}}
+	};
 
-	mvprintw(rows / 2, cols / 2, symbol_to_utf8({.b = {1, 0, 0b110111}}).c_str());
+	clear();
+	draw_puzzle(p);
+	refresh();
+	getch();
+
+	p = apply_special_symbols(p);
+
+	clear();
+	draw_puzzle(p);
+	refresh();
 	getch();
 
 	endwin();
+
+	return 0;
 }

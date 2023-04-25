@@ -1,6 +1,10 @@
 #include "puzzle.hpp"
 
-auto is_solved(Puzzle const& p) -> bool
+#include "symbol.hpp"
+
+#include <etl/array.h>
+
+auto apply_special_symbols(Puzzle const& p) -> Puzzle
 {
 	Puzzle result;
 
@@ -9,6 +13,13 @@ auto is_solved(Puzzle const& p) -> bool
 	{
 		Symbol s = p[i];
 		if (!s.is_block) { continue; }
+
+		// Locked blocks aren't affected by special symbols.
+		if (s.b.is_locked)
+		{
+			result.push_back(s);
+			continue;
+		}
 
 		// List of indices to apply special operations from.
 		etl::vector<size_t, 2> to_apply;
@@ -54,5 +65,45 @@ auto is_solved(Puzzle const& p) -> bool
 		}
 	}
 
-	return false;
+	return result;
+}
+
+// Left distances and widths of a row.
+struct RowMetrics
+{
+	int left_dist; // Distance from left to first dot. -1 means the row is empty.
+	int width; // Width of the content of the row.
+};
+
+static
+auto block_metrics(Symbol s) -> etl::array<RowMetrics, 3>
+{
+	etl::array<RowMetrics, 3> result;
+	for (size_t i = 0; i < 3; ++i)
+	{
+		// Extremely jank way of converting (left, right) into a number for switching.
+		switch (2 * !!block_bit(s, static_cast<int>(i), 0)
+			+ !!block_bit(s, static_cast<int>(i), 1))
+		{
+		case 0b00: result[i] = {-1, 0}; break;
+		case 0b01: result[i] = {1, 1}; break;
+		case 0b10: result[i] = {0, 1}; break;
+		case 0b11: result[i] = {0, 2}; break;
+		}
+	}
+
+	return result;
+}
+
+auto is_solved(Puzzle const& p) -> bool
+{
+	auto const normalized = apply_special_symbols(p);
+
+	// Distances in each row to the left wall.
+	int left_spaces[3] = {0, 0, 0};
+	for (Symbol const s : p)
+	{
+	}
+
+	return true;
 }

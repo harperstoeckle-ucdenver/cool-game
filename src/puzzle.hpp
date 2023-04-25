@@ -8,6 +8,8 @@
 // A puzzle is just a sequence of up to 8 symbols.
 using Puzzle = etl::vector<Symbol, 8>;
 
+auto apply_special_symbols(Puzzle const& p) -> Puzzle;
+
 // Check whether the puzzle is in a solved position.
 auto is_solved(Puzzle const& p) -> bool;
 

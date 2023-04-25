@@ -38,9 +38,9 @@ static_assert(sizeof(Symbol) == 1);
 auto block_bit(Symbol s, int row, int col) -> bool;
 
 // Set the block bit at the given row and column.
-void set_block_bit(Symbol s, int row, int col, bool v);
+void set_block_bit(Symbol& s, int row, int col, bool v);
 
 // Swap bits (r0, c0) and (r1, c1).
-void swap_block_bits(Symbol s, int r0, int c0, int r1, int c1);
+void swap_block_bits(Symbol& s, int r0, int c0, int r1, int c1);
 
 #endif
