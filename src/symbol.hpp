@@ -47,14 +47,14 @@ void swap_block_bits(Symbol& s, int r0, int c0, int r1, int c1);
 inline
 auto make_block(uint8_t bits, bool locked = false) -> Symbol
 {
-	return {.b = {1, locked, bits}};
+	return Symbol{.b = {1, locked, bits}};
 }
 
 // Construct a special symbol.
 inline
 auto make_special(bool left, bool right, SymbolType type, bool locked = false) -> Symbol
 {
-	return {.s = {0, locked, left, right, type}};
+	return Symbol{.s = {0, locked, left, right, type}};
 }
 
 #endif

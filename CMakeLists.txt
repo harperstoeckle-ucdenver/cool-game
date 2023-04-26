@@ -9,6 +9,7 @@ if (COOL_GAME_PLATFORM STREQUAL "arduino")
 	set(ARDUINO_BOARD avr.uno CACHE STRING "Board name")
 	set(ARDUINO_INSTALL_PATH "$ENV{HOME}/Library/Arduino15/"
 		CACHE PATH "Arduino SDK installation path")
+	option(NO_SYSTEM_INCLUDE "" ON)
 	set(CMAKE_TOOLCHAIN_FILE cmake/Arduino-CMake-Toolchain/Arduino-toolchain.cmake)
 endif()
 
