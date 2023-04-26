@@ -2,6 +2,7 @@
 #define GAME_HPP_INCLUDED
 
 #include "platform.hpp"
+#include "puzzle.hpp"
 
 // Types of events that can cause the state of the game to change.
 enum struct InputEvent
@@ -22,7 +23,20 @@ enum struct InputEvent
  */
 class Game
 {
+private:
+	Puzzle puzzle = {
+		make_block(0b111011),
+		make_special(true, false, SymbolType::remove),
+		make_block(0b111111),
+		make_block(0b011101)
+	};
+
+	CursorState curs_state = {0, false};
+
 public:
+	// Starts displaying the game.
+	Game();
+
 	/*
 	 * Send an event to the game, causing change in the game's state and possibly some sort of
 	 * output. For example, sending InputEvent::reset while in a level will reset the level.

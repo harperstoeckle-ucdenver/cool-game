@@ -16,6 +16,7 @@ auto main() -> int
 	noecho();
 	keypad(stdscr, true);
 	cbreak();
+	curs_set(0);
 
 	Game game;
 
@@ -27,10 +28,10 @@ auto main() -> int
 		{
 		case KEY_LEFT: e = InputEvent::move_left; break;
 		case KEY_RIGHT: e = InputEvent::move_right; break;
-		case KEY_ENTER: e = InputEvent::select; break;
+		case ' ': e = InputEvent::select; break;
 		case 'r': e = InputEvent::reset; break;
 		case 'm': e = InputEvent::change_mode; break;
-		case KEY_STAB: e = InputEvent::check_solution; break;
+		case '\n': e = InputEvent::check_solution; break;
 		default: continue;
 		}
 

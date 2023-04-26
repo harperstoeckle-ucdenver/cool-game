@@ -40,8 +40,7 @@ auto symbol_to_utf8(Symbol s) -> Utf8Char
 	return c;
 }
 
-static
-void draw_puzzle(Puzzle const& p)
+void draw_puzzle_state(Puzzle const& p, CursorState c, int level_num)
 {
 	int i = 0;
 	for (auto s : p)
@@ -56,24 +55,27 @@ void draw_puzzle(Puzzle const& p)
 			case 0b10: arrow_str = "←"; break;
 			case 0b11: arrow_str = "↔"; break;
 			}
-			mvprintw(0, i, arrow_str);
+			mvprintw(0, i * 2, arrow_str);
 		}
 
 		if (s.b.is_locked)
 		{
-			mvprintw(2, i, "⬢");
+			mvprintw(2, i * 2, "⬢");
+		}
+		else if (i == c.index)
+		{
+			mvprintw(2, i * 2, c.grabbed ? "▲" : "△");
 		}
 
-		mvprintw(1, i, symbol_to_utf8(s).c_str());
+		mvprintw(1, i * 2, symbol_to_utf8(s).c_str());
 
-		i += 2;
+		++i;
 	}
-}
 
-void draw_puzzle_state(Puzzle const& p, CursorState c, int level_num)
-{
-	clear();
-	draw_puzzle(p);
 	mvprintw(0, 18, "level %d", level_num);
+	mvprintw(5, 0,
+		"quit: q            select/drop: space\n"
+		"move: arrow keys   reset level: r\n"
+		"change mode: m     try solution: enter\n");
 	refresh();
 }
