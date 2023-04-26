@@ -4,7 +4,7 @@
 
 #include "puzzle.hpp"
 
-#include <etl/optional>
+#include <etl/optional.h>
 #include <etl/span.h>
 
 struct CursorState

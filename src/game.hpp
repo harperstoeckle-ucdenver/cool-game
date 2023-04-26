@@ -1,6 +1,8 @@
 #ifndef GAME_HPP_INCLUDED
 #define GAME_HPP_INCLUDED
 
+#include "platform.hpp"
+
 // Types of events that can cause the state of the game to change.
 enum struct InputEvent
 {
