@@ -27,7 +27,7 @@ private:
 	Puzzle puzzle = {
 		make_block(0b111011),
 		make_special(true, false, SymbolType::remove),
-		make_block(0b111111),
+		make_block(0b111111, true),
 		make_block(0b011101)
 	};
 

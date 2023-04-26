@@ -42,6 +42,8 @@ auto symbol_to_utf8(Symbol s) -> Utf8Char
 
 void draw_puzzle_state(Puzzle const& p, CursorState c, int level_num)
 {
+	clear();
+
 	int i = 0;
 	for (auto s : p)
 	{
@@ -60,14 +62,14 @@ void draw_puzzle_state(Puzzle const& p, CursorState c, int level_num)
 
 		if (s.b.is_locked)
 		{
-			mvprintw(2, i * 2, "⬢");
+			mvaddstr(2, i * 2, "▣");
 		}
 		else if (i == c.index)
 		{
-			mvprintw(2, i * 2, c.grabbed ? "▲" : "△");
+			mvaddstr(2, i * 2, c.grabbed ? "▲" : "△");
 		}
 
-		mvprintw(1, i * 2, symbol_to_utf8(s).c_str());
+		mvaddstr(1, i * 2, symbol_to_utf8(s).c_str());
 
 		++i;
 	}
