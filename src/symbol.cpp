@@ -15,7 +15,7 @@ void set_block_bit(Symbol& s, int row, int col, bool v)
 	}
 	else
 	{
-		s.b.bits ^= (1 << offset);
+		s.b.bits &= ~(1 << offset);
 	}
 }
 
