@@ -12,6 +12,10 @@ auto symbol_to_utf8(Symbol s) -> Utf8Char
 {
 	// Map a type to a symbol.
 	static etl::flat_map<SymbolType, char, 16> type_map = {
+		{SymbolType::num_0, '0'},
+		{SymbolType::num_1, '1'},
+		{SymbolType::num_2, '2'},
+		{SymbolType::num_3, '3'},
 		{SymbolType::flip_left_right, '|'},
 		{SymbolType::flip_up_down, '-'},
 		{SymbolType::remove, 'x'}

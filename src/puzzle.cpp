@@ -40,6 +40,11 @@ auto apply_special_symbols(Puzzle const& p) -> Puzzle
 		{
 			switch (p[si].s.type)
 			{
+			case SymbolType::num_0: break;
+			case SymbolType::num_1: break;
+			case SymbolType::num_2: break;
+			case SymbolType::num_3: break;
+
 			case SymbolType::remove:
 				should_add_to_result = false;
 				break;

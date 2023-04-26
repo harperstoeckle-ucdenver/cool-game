@@ -25,10 +25,10 @@ class Game
 {
 private:
 	Puzzle puzzle = {
-		make_block(0b111011),
-		make_special(true, false, SymbolType::remove),
-		make_block(0b111111, true),
-		make_block(0b011101)
+		make_special(false, false, SymbolType::num_0),
+		make_special(false, false, SymbolType::num_1),
+		make_special(false, false, SymbolType::num_2),
+		make_special(false, false, SymbolType::num_3)
 	};
 
 	CursorState curs_state = {0, false};

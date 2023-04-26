@@ -5,6 +5,12 @@
 
 enum struct SymbolType : uint8_t
 {
+	// Regular numbers. They do nothing and are just for showing off the mechanics.
+	num_0,
+	num_1,
+	num_2,
+	num_3,
+
 	remove,
 	flip_up_down,
 	flip_left_right
