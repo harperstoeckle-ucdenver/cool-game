@@ -126,6 +126,21 @@ auto all_equal(It b, It e) -> bool
 
 auto is_solved(Puzzle const& p) -> bool
 {
+	// All numbers must be in order.
+	Puzzle numbers;
+	etl::copy_if(p.cbegin(), p.cend(), etl::back_inserter(numbers),
+		[](auto s) {
+			auto const type_val = static_cast<uint8_t>(s.s.type);
+			return 0 <= type_val && type_val <= 3;
+		});
+	if (!etl::is_sorted(numbers.cbegin(), numbers.cend(), 
+			[](auto a, auto b) {
+				return static_cast<uint8_t>(a.s.type) < static_cast<uint8_t>(b.s.type);
+			}))
+	{
+		return false;
+	}
+
 	auto const normalized = apply_special_symbols(p);
 
 	// Width of the built-up block in each row.
