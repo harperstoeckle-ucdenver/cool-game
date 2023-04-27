@@ -9,7 +9,7 @@
 
 struct CursorState
 {
-	size_t index;
+	int index;
 	bool grabbed;
 };
 

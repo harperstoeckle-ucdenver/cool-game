@@ -68,7 +68,7 @@ void draw_puzzle_state(Puzzle const& p, CursorState c, int level_num)
 		{
 			mvaddstr(2, i * 2, "▣");
 		}
-		else if (static_cast<size_t>(i) == c.index)
+		else if (i == c.index)
 		{
 			mvaddstr(2, i * 2, c.grabbed ? "▲" : "△");
 		}
