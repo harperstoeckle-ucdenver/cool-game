@@ -21,9 +21,9 @@ inline Puzzle const levels[] = {
 
 	// 2
 	{
-		make_block(0b101011),
+		make_block(0b110101),
 		make_block(0b101101),
-		make_block(0b110101)
+		make_block(0b101011)
 	},
 
 	// Last
