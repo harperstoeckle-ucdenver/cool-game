@@ -11,20 +11,21 @@ static
 auto symbol_to_utf8(Symbol s) -> Utf8Char
 {
 	// Map a type to a symbol.
-	static etl::flat_map<SymbolType, char, 16> type_map = {
-		{SymbolType::num_0, '0'},
-		{SymbolType::num_1, '1'},
-		{SymbolType::num_2, '2'},
-		{SymbolType::num_3, '3'},
-		{SymbolType::flip_left_right, '|'},
-		{SymbolType::flip_up_down, '-'},
-		{SymbolType::remove, 'x'}
+	static etl::flat_map<SymbolType, char const*, 16> type_map = {
+		{SymbolType::num_0, "0"},
+		{SymbolType::num_1, "1"},
+		{SymbolType::num_2, "2"},
+		{SymbolType::num_3, "3"},
+		{SymbolType::trophy, "🏆"},
+		{SymbolType::flip_left_right, "⦶"},
+		{SymbolType::flip_up_down, "⦵"},
+		{SymbolType::remove, "×"}
 	};
 
 	if (!s.is_block)
 	{
 		auto const it = type_map.find(s.s.type);
-		return Utf8Char(1, it == type_map.end() ? '?' : it->second);
+		return Utf8Char(it == type_map.end() ? "?" : it->second);
 	}
 
 	Utf8Char c;

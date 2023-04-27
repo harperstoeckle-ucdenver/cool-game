@@ -11,6 +11,9 @@ enum struct SymbolType : uint8_t
 	num_2,
 	num_3,
 
+	// Shown in the last level. It means you win.
+	trophy,
+
 	remove,
 	flip_up_down,
 	flip_left_right

@@ -72,6 +72,7 @@ void Game::send_input_event(InputEvent e)
 			++cur_level;
 			last_unlocked_level = etl::max(cur_level, last_unlocked_level);
 			puzzle = levels[cur_level];
+			curs_state = {0, false};
 		}
 		break;
 	}
