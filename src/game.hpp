@@ -30,7 +30,7 @@ private:
 	int last_unlocked_level = 0;
 	int cur_level = last_unlocked_level;
 
-	Puzzle puzzle = levels[cur_level];
+	Puzzle puzzle;
 
 public:
 	// Starts displaying the game.

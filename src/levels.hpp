@@ -8,11 +8,11 @@ inline Puzzle const levels[] = {
 	// 0
 	{
 		make_special(false, false, SymbolType::num_1),
-		make_special(false, false, SymbolType::num_0),
+		make_special(false, false, SymbolType::num_3),
 		make_special(false, false, SymbolType::num_2),
-		make_special(false, false, SymbolType::num_3)
+		make_special(false, false, SymbolType::num_0)
 	},
-	
+
 	// 1
 	{
 		make_block(0b011101),

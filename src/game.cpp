@@ -4,6 +4,7 @@
 
 Game::Game()
 {
+	puzzle = levels[cur_level];
 	draw_puzzle_state(puzzle, curs_state, cur_level);
 }
 
@@ -66,6 +67,12 @@ void Game::send_input_event(InputEvent e)
 		break;
 
 	case InputEvent::check_solution:
+		if (is_solved(puzzle) && cur_level < static_cast<int>(num_levels) - 1)
+		{
+			++cur_level;
+			last_unlocked_level = etl::max(cur_level, last_unlocked_level);
+			puzzle = levels[cur_level];
+		}
 		break;
 	}
 

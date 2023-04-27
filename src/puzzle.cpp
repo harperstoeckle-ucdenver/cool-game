@@ -128,7 +128,7 @@ auto is_solved(Puzzle const& p) -> bool
 
 	// Width of the built-up block in each row.
 	etl::array<int, 3> built_widths = {0, 0, 0};
-	for (Symbol const s : p)
+	for (Symbol const s : normalized)
 	{
 		// Don't bother trying to do anything with empty blocks.
 		if (s.b.bits == 0) { continue; }
