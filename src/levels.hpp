@@ -33,6 +33,13 @@ inline Puzzle const levels[] = {
 		make_block(0b111010)
 	},
 
+	// 4
+	{
+		make_block(0b001101),
+		make_block(0b010000),
+		make_block(0b010010)
+	},
+
 	// Last
 	{
 		make_special(false, false, SymbolType::trophy)
