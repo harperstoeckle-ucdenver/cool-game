@@ -29,6 +29,8 @@ auto find_prev_unlocked(Puzzle& p, size_t cursor_index) -> Puzzle::iterator
 
 void Game::send_input_event(InputEvent e)
 {
+	auto const cur_it = puzzle.begin() + curs_state.index;
+
 	switch (e)
 	{
 	case InputEvent::move_left:
@@ -37,6 +39,7 @@ void Game::send_input_event(InputEvent e)
 			if (prev_unlocked_it != puzzle.end())
 			{
 				curs_state.index = static_cast<size_t>(prev_unlocked_it - puzzle.begin());
+				if (curs_state.grabbed) { etl::iter_swap(cur_it, prev_unlocked_it); }
 			}
 		}
 		break;
@@ -47,6 +50,7 @@ void Game::send_input_event(InputEvent e)
 			if (next_unlocked_it != puzzle.end())
 			{
 				curs_state.index = static_cast<size_t>(next_unlocked_it - puzzle.begin());
+				if (curs_state.grabbed) { etl::iter_swap(cur_it, next_unlocked_it); }
 			}
 		}
 		break;

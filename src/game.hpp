@@ -26,9 +26,9 @@ class Game
 private:
 	Puzzle puzzle = {
 		make_special(false, false, SymbolType::num_0),
-		make_special(false, false, SymbolType::num_1, true),
+		make_special(false, false, SymbolType::num_1),
 		make_special(false, false, SymbolType::num_2),
-		make_special(false, false, SymbolType::num_3, true)
+		make_special(false, false, SymbolType::num_3)
 	};
 
 	CursorState curs_state = {0, false};
