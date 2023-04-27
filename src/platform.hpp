@@ -23,7 +23,7 @@ struct Note
 	unsigned long duration_ms;
 };
 
-// Play a note, blocking until it is done playing.
-void play_note(Note const& n);
+// Play a sequence of notes, blocking until finished.
+void play_melody(etl::span<Note const> melody);
 
 #endif
