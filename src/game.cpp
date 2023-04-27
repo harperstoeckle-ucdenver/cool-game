@@ -4,7 +4,7 @@
 
 Game::Game()
 {
-	draw_puzzle_state(puzzle, curs_state, 0);
+	draw_puzzle_state(puzzle, curs_state, cur_level);
 }
 
 // Find the next unlocked symbol in a puzzle after the cursor. If not found, return p.end().
@@ -59,6 +59,7 @@ void Game::send_input_event(InputEvent e)
 		break;
 
 	case InputEvent::reset:
+		puzzle = levels[cur_level];
 		break;
 
 	case InputEvent::change_mode:
@@ -68,5 +69,5 @@ void Game::send_input_event(InputEvent e)
 		break;
 	}
 
-	draw_puzzle_state(puzzle, curs_state, 0);
+	draw_puzzle_state(puzzle, curs_state, cur_level);
 }

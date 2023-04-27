@@ -1,6 +1,7 @@
 #ifndef GAME_HPP_INCLUDED
 #define GAME_HPP_INCLUDED
 
+#include "levels.hpp"
 #include "platform.hpp"
 #include "puzzle.hpp"
 
@@ -24,14 +25,12 @@ enum struct InputEvent
 class Game
 {
 private:
-	Puzzle puzzle = {
-		make_special(false, false, SymbolType::num_0),
-		make_special(false, false, SymbolType::num_1),
-		make_special(false, false, SymbolType::num_2),
-		make_special(false, false, SymbolType::num_3)
-	};
-
 	CursorState curs_state = {0, false};
+
+	int last_unlocked_level = 0;
+	int cur_level = last_unlocked_level;
+
+	Puzzle puzzle = levels[cur_level];
 
 public:
 	// Starts displaying the game.
