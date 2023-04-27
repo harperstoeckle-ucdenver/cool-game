@@ -1,8 +1,30 @@
 #include "game.hpp"
 
+#include <etl/algorithm.h>
+
 Game::Game()
 {
 	draw_puzzle_state(puzzle, curs_state, 0);
+}
+
+// Find the next unlocked symbol in a puzzle after the cursor. If not found, return p.end().
+static
+auto find_next_unlocked(Puzzle& p, size_t cursor_index) -> Puzzle::iterator
+{
+	if (cursor_index >= p.size()) { return p.end(); }
+	return etl::find_if(p.begin() + cursor_index + 1, p.end(),
+		[](auto s) { return !s.b.is_locked; });
+}
+
+// Find the next unlocked symbol in a puzzle before the cursor. If not found, return p.end().
+static
+auto find_prev_unlocked(Puzzle& p, size_t cursor_index) -> Puzzle::iterator
+{
+	if (cursor_index >= p.size()) { return p.end(); }
+	auto const prev_unlocked_it = etl::find_if(
+		p.rbegin() + static_cast<Puzzle::difference_type>(p.size() - cursor_index), p.rend(),
+		[](auto s) { return !s.b.is_locked; });
+	return prev_unlocked_it == p.rend() ? p.end() : prev_unlocked_it.base() - 1;
 }
 
 void Game::send_input_event(InputEvent e)
@@ -10,13 +32,23 @@ void Game::send_input_event(InputEvent e)
 	switch (e)
 	{
 	case InputEvent::move_left:
-		if (curs_state.index == 0) { curs_state.index = puzzle.size() - 1; }
-		else { --curs_state.index; }
+		{
+			auto const prev_unlocked_it = find_prev_unlocked(puzzle, curs_state.index);
+			if (prev_unlocked_it != puzzle.end())
+			{
+				curs_state.index = static_cast<size_t>(prev_unlocked_it - puzzle.begin());
+			}
+		}
 		break;
 
 	case InputEvent::move_right:
-		if (curs_state.index == puzzle.size() - 1) { curs_state.index = 0; }
-		else { ++curs_state.index; }
+		{
+			auto const next_unlocked_it = find_next_unlocked(puzzle, curs_state.index);
+			if (next_unlocked_it != puzzle.end())
+			{
+				curs_state.index = static_cast<size_t>(next_unlocked_it - puzzle.begin());
+			}
+		}
 		break;
 
 	case InputEvent::select:
