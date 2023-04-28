@@ -1,21 +1,32 @@
 // vim: ft=arduino
 
-#include <Arduino.h>
-#include <LiquidCrystal.h>
+#include "game.hpp"
 
-LiquidCrystal lcd(2, 3, 4, 7, 8, 9, 10);
+#include <Arduino.h>
+
+Game game;
 
 void setup()
 {
-	lcd.begin(16, 2);
-	lcd.print("hello world");
-	lcd.cursor();
+	Serial.begin(9600);
 }
 
 void loop()
 {
-	static int c = 0;
-	lcd.setCursor(c % 16, c / 16);
-	delay(500);
-	c = (c + 1) % 32;
+	if (Serial.available() > 0)
+	{
+		InputEvent e;
+		switch (Serial.read())
+		{
+		case 'h': e = InputEvent::move_left; break;
+		case 'l': e = InputEvent::move_right; break;
+		case ' ': e = InputEvent::select; break;
+		case 'r': e = InputEvent::reset; break;
+		case '\t': e = InputEvent::change_mode; break;
+		case 'c': e = InputEvent::check_solution; break;
+		default: return;
+		}
+
+		game.send_input_event(e);
+	}
 }
