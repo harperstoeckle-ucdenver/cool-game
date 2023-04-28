@@ -1,5 +1,8 @@
 #include "platform.hpp"
 
+#include "levels.hpp"
+
+#include <etl/algorithm.h>
 #include <etl/flat_map.h>
 #include <etl/string.h>
 #include <ncurses.h>
@@ -80,9 +83,31 @@ void draw_puzzle_state(Puzzle const& p, CursorState c, int level_num)
 	}
 
 	mvprintw(0, 18, "level %d", level_num);
-	mvprintw(5, 0,
+	mvaddstr(5, 0,
 		"quit: q            select/drop: space\n"
 		"move: arrow keys   reset level: r\n"
-		"change mode: m     try solution: enter\n");
+		"level select: tab  try solution: enter\n");
+	refresh();
+}
+
+void draw_level_select(int cur_level, int max_unlocked_level)
+{
+	clear();
+
+	int const min_shown = etl::max(0, cur_level - 1);
+	int const one_past_max_shown = etl::min(min_shown + 4, static_cast<int>(num_levels));
+
+	int col = 0;
+	for (int i = min_shown; i < one_past_max_shown; ++i, col += 4)
+	{
+		mvprintw(1, col, "%-4d", i);
+		if (i == cur_level) { mvaddstr(2, col, "△"); }
+		else if (i > max_unlocked_level) { mvaddstr(2, col, "▣"); }
+	}
+
+	mvaddstr(5, 0,
+		"quit: q            select level: space\n"
+		"move: arrow keys\n");
+
 	refresh();
 }

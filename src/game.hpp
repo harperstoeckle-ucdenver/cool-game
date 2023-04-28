@@ -27,6 +27,7 @@ class Game
 private:
 	CursorState curs_state = {0, false};
 
+	bool in_level_select_mode = false;
 	int last_unlocked_level = 0;
 	int cur_level = last_unlocked_level;
 

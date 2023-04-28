@@ -34,6 +34,11 @@ void Game::send_input_event(InputEvent e)
 	switch (e)
 	{
 	case InputEvent::move_left:
+		if (in_level_select_mode)
+		{
+			cur_level = etl::max(0, cur_level - 1);
+		}
+		else
 		{
 			auto const prev_unlocked_it = find_prev_unlocked(puzzle, curs_state.index);
 			if (prev_unlocked_it != puzzle.end())
@@ -45,6 +50,11 @@ void Game::send_input_event(InputEvent e)
 		break;
 
 	case InputEvent::move_right:
+		if (in_level_select_mode)
+		{
+			cur_level = etl::min(cur_level + 1, last_unlocked_level);
+		}
+		else
 		{
 			auto const next_unlocked_it = find_next_unlocked(puzzle, curs_state.index);
 			if (next_unlocked_it != puzzle.end())
@@ -56,18 +66,34 @@ void Game::send_input_event(InputEvent e)
 		break;
 
 	case InputEvent::select:
-		curs_state.grabbed = !curs_state.grabbed;
+		if (in_level_select_mode)
+		{
+			puzzle = levels[cur_level];
+			curs_state = {0, false};
+			in_level_select_mode = false;
+		}
+		else
+		{
+			curs_state.grabbed = !curs_state.grabbed;
+		}
 		break;
 
+	// This was already handled before, so we ignore it.
 	case InputEvent::reset:
-		puzzle = levels[cur_level];
+		if (!in_level_select_mode)
+		{
+			puzzle = levels[cur_level];
+		}
 		break;
 
 	case InputEvent::change_mode:
+		in_level_select_mode = true;
 		break;
 
 	case InputEvent::check_solution:
-		if (is_solved(puzzle) && cur_level < static_cast<int>(num_levels) - 1)
+		if (!in_level_select_mode
+			&& is_solved(puzzle)
+			&& cur_level < static_cast<int>(num_levels) - 1)
 		{
 			++cur_level;
 			last_unlocked_level = etl::max(cur_level, last_unlocked_level);
@@ -77,5 +103,12 @@ void Game::send_input_event(InputEvent e)
 		break;
 	}
 
-	draw_puzzle_state(puzzle, curs_state, cur_level);
+	if (in_level_select_mode)
+	{
+		draw_level_select(cur_level, last_unlocked_level);
+	}
+	else
+	{
+		draw_puzzle_state(puzzle, curs_state, cur_level);
+	}
 }

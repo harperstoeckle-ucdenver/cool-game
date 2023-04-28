@@ -26,4 +26,10 @@ struct Note
 // Play a sequence of notes, blocking until finished.
 void play_melody(etl::span<Note const> melody);
 
+/*
+ * Draw a level select screen from the current level number and maximum unlocked level. All
+ * non-unlocked levels will be drawn with a locked sign below them.
+ */
+void draw_level_select(int cur_level, int max_unlocked_level);
+
 #endif

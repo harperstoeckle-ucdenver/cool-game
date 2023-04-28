@@ -30,7 +30,7 @@ auto main() -> int
 		case KEY_RIGHT: e = InputEvent::move_right; break;
 		case ' ': e = InputEvent::select; break;
 		case 'r': e = InputEvent::reset; break;
-		case 'm': e = InputEvent::change_mode; break;
+		case '\t': e = InputEvent::change_mode; break;
 		case '\n': e = InputEvent::check_solution; break;
 		default: continue;
 		}
