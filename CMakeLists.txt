@@ -47,7 +47,7 @@ target_link_libraries(cool-game PRIVATE etl::etl)
 target_compile_definitions(cool-game PRIVATE ETL_NO_STL)
 
 if (COOL_GAME_PLATFORM STREQUAL "arduino")
-	target_link_arduino_libraries(cool-game PRIVATE core EEPROM)
+	target_link_arduino_libraries(cool-game PRIVATE core EEPROM LiquidCrystal)
 	target_enable_arduino_upload(cool-game)
 else()
 	find_package(Curses REQUIRED)
