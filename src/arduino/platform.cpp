@@ -2,16 +2,67 @@
 
 #include <LiquidCrystal.h>
 
+#include <etl/algorithm.h>
+#include <etl/array.h>
+#include <etl/functional.h>
+#include <etl/variant.h>
+
 LiquidCrystal lcd(2, 3, 4, 7, 8, 9, 10);
 int const start_lcd = [] {
 	lcd.begin(16, 2);
 	return 0;
 }();
 
-static
-auto symbol_to_char(Symbol s) -> char
+using Sprite = etl::array<uint8_t, 8>;
+
+// Either a unique sprite or a normal character.
+using DisplayChar = etl::variant<char, Sprite>;
+
+// Add pixels from b to a.
+void add_to_sprite(Sprite& a, Sprite const& b)
 {
-	if (s.is_block) { return 'b'; }
+	etl::transform_n(a.cbegin(), b.cbegin(), 8, a.begin(), etl::bit_or<uint8_t>());
+}
+
+Sprite const block_sprites[3][2] = {
+	// Row 0.
+	{
+		{0b11000, 0b11000, 0, 0, 0, 0, 0, 0},
+		{0b00011, 0b00011, 0, 0, 0, 0, 0, 0}
+	},
+
+	// Row 1.
+	{
+		{0, 0, 0, 0b11000, 0b11000, 0, 0, 0},
+		{0, 0, 0, 0b00011, 0b00011, 0, 0, 0}
+	},
+
+	// Row 2.
+	{
+		{0, 0, 0, 0, 0, 0, 0b11000, 0b11000},
+		{0, 0, 0, 0, 0, 0, 0b00011, 0b00011}
+	}
+};
+
+static
+auto symbol_to_char(Symbol s) -> DisplayChar
+{
+	if (s.is_block)
+	{
+		Sprite block = {0, 0, 0, 0, 0, 0, 0, 0};
+		for (int const r : {0, 1, 2})
+		{
+			for (int const c : {0, 1})
+			{
+				if (block_bit(s, r, c))
+				{
+					add_to_sprite(block, block_sprites[r][c]);
+				}
+			}
+		}
+
+		return block;
+	}
 	switch (s.s.type)
 	{
 		case SymbolType::num_0: return '0';
@@ -27,18 +78,49 @@ auto symbol_to_char(Symbol s) -> char
 
 void draw_puzzle_state(Puzzle const& p, CursorState c, int level_num)
 {
-	lcd.clear();
-	for (Symbol const s : p)
+	// The actual sprites have to be created *before* clearing to work.
+	for (uint8_t i = 0; i < p.size(); ++i)
 	{
-		lcd.print(symbol_to_char(s));
+		auto const dc = symbol_to_char(p[i]);
+		if (Sprite* s = etl::get_if<Sprite>(&dc))
+		{
+			lcd.createChar(i, s->data());
+		}
 	}
 
-	lcd.setCursor(c.index, 1);
-	lcd.print(c.grabbed ? '@' : '^');
+	lcd.clear();
 
-	lcd.setCursor(9, 0);
-	lcd.print("lvl ");
-	lcd.print(level_num);
+	for (uint8_t i = 0; i < p.size(); ++i)
+	{
+		lcd.setCursor(i * 2, 0);
+
+		auto const dc = symbol_to_char(p[i]);
+		if (char* c = etl::get_if<char>(&dc))
+		{
+			lcd.print(*c);
+		}
+		else
+		{
+			lcd.write(i);
+		}
+
+		lcd.setCursor(i * 2, 1);
+
+		if (p[i].b.is_locked)
+		{
+			lcd.print('#');
+		}
+		else if (i == c.index)
+		{
+			lcd.print(c.grabbed ? '@' : '^');
+		}
+	}
+
+	lcd.setCursor(c.index * 2, 1);
+
+	//lcd.setCursor(9, 0);
+	//lcd.print("lvl ");
+	//lcd.print(level_num);
 }
 
 void draw_level_select([[maybe_unused]] int cur_level, [[maybe_unused]] int max_unlocked_level) {}
