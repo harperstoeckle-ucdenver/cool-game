@@ -6,6 +6,7 @@
 #include <etl/flat_map.h>
 #include <etl/string.h>
 #include <ncurses.h>
+#include <unistd.h>
 
 using Utf8Char = etl::string<5>;
 
@@ -110,4 +111,25 @@ void draw_level_select(int cur_level, int max_unlocked_level)
 		"move: arrow keys\n");
 
 	refresh();
+}
+
+void play_jingle(Jingle j)
+{
+	switch (j)
+	{
+	case Jingle::move_cursor: break;
+	case Jingle::select: break;
+
+	case Jingle::correct:
+		mvaddstr(2, 18, "Correct");
+		refresh();
+		usleep(500000);
+		break;
+
+	case Jingle::incorrect:
+		mvaddstr(2, 18, "Incorrect");
+		refresh();
+		usleep(500000);
+		break;
+	}
 }

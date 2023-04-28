@@ -34,6 +34,8 @@ void Game::send_input_event(InputEvent e)
 	switch (e)
 	{
 	case InputEvent::move_left:
+		play_jingle(Jingle::move_cursor);
+
 		if (in_level_select_mode)
 		{
 			cur_level = etl::max(0, cur_level - 1);
@@ -50,6 +52,8 @@ void Game::send_input_event(InputEvent e)
 		break;
 
 	case InputEvent::move_right:
+		play_jingle(Jingle::move_cursor);
+
 		if (in_level_select_mode)
 		{
 			cur_level = etl::min(cur_level + 1, last_unlocked_level);
@@ -66,6 +70,8 @@ void Game::send_input_event(InputEvent e)
 		break;
 
 	case InputEvent::select:
+		play_jingle(Jingle::select);
+
 		if (in_level_select_mode)
 		{
 			puzzle = levels[cur_level];
@@ -91,14 +97,24 @@ void Game::send_input_event(InputEvent e)
 		break;
 
 	case InputEvent::check_solution:
-		if (!in_level_select_mode
-			&& is_solved(puzzle)
-			&& cur_level < static_cast<int>(num_levels) - 1)
+		if (!in_level_select_mode)
 		{
-			++cur_level;
-			last_unlocked_level = etl::max(cur_level, last_unlocked_level);
-			puzzle = levels[cur_level];
-			curs_state = {0, false};
+			if (is_solved(puzzle))
+			{
+				play_jingle(Jingle::correct);
+
+				if (cur_level < static_cast<int>(num_levels) - 1)
+				{
+					++cur_level;
+					last_unlocked_level = etl::max(cur_level, last_unlocked_level);
+					puzzle = levels[cur_level];
+					curs_state = {0, false};
+				}
+			}
+			else
+			{
+				play_jingle(Jingle::incorrect);
+			}
 		}
 		break;
 	}
