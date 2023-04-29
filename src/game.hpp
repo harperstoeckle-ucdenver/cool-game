@@ -25,13 +25,13 @@ enum struct InputEvent
 class Game
 {
 private:
-	CursorState curs_state = {0, false};
+	CursorState curs_state_ = {0, false};
 
-	bool in_level_select_mode = false;
-	int last_unlocked_level = 0;
-	int cur_level = last_unlocked_level;
+	bool in_level_select_mode_ = false;
+	int last_unlocked_level_ = 0;
+	int cur_level_ = last_unlocked_level_;
 
-	Puzzle puzzle;
+	Puzzle puzzle_;
 
 public:
 	// Starts displaying the game.
