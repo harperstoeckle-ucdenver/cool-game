@@ -26,6 +26,8 @@ void setup()
 	pinMode(joystick_x_pin, INPUT);
 	pinMode(joystick_y_pin, INPUT);
 	pinMode(joystick_button_pin, INPUT_PULLUP);
+
+	pinMode(5, OUTPUT);
 }
 
 void loop()
