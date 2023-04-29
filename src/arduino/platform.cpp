@@ -178,6 +178,7 @@ void play_jingle(Jingle j)
 		break;
 
 	case Jingle::correct:
+		digitalWrite(pin::correct_led, HIGH);
 		tone(pin::buzzer, note::c4);
 		delay(200);
 		tone(pin::buzzer, note::ds4);
@@ -185,9 +186,11 @@ void play_jingle(Jingle j)
 		tone(pin::buzzer, note::b3);
 		delay(400);
 		noTone(pin::buzzer);
+		digitalWrite(pin::correct_led, LOW);
 		break;
 
 	case Jingle::incorrect:
+		digitalWrite(pin::incorrect_led, HIGH);
 		tone(pin::buzzer, note::f2);
 		delay(200);
 		noTone(pin::buzzer);
@@ -195,6 +198,7 @@ void play_jingle(Jingle j)
 		tone(pin::buzzer, note::f2);
 		delay(200);
 		noTone(pin::buzzer);
+		digitalWrite(pin::incorrect_led, LOW);
 		break;
 	}
 }

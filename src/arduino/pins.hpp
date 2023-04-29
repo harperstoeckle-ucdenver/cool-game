@@ -18,6 +18,9 @@ inline constexpr uint8_t lcd_d4 = 7;
 inline constexpr uint8_t lcd_d5 = 8;
 inline constexpr uint8_t lcd_d6 = 9;
 inline constexpr uint8_t lcd_d7 = 10;
+
+inline constexpr uint8_t correct_led = PIN_A3;
+inline constexpr uint8_t incorrect_led = PIN_A4;
 } // namespace pin
 
 #endif

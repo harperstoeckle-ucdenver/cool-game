@@ -25,6 +25,9 @@ void setup()
 	pinMode(pin::joystick_button, INPUT_PULLUP);
 
 	pinMode(pin::buzzer, OUTPUT);
+
+	pinMode(pin::correct_led, OUTPUT);
+	pinMode(pin::incorrect_led, OUTPUT);
 }
 
 void loop()
