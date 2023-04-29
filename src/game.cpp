@@ -70,7 +70,6 @@ void Game::send_input_event(InputEvent e)
 		break;
 
 	case InputEvent::select:
-		play_jingle(Jingle::select);
 
 		if (in_level_select_mode_)
 		{
@@ -79,7 +78,16 @@ void Game::send_input_event(InputEvent e)
 		}
 		else
 		{
-			curs_state_.grabbed = !curs_state_.grabbed;
+			if (curs_state_.grabbed)
+			{
+				play_jingle(Jingle::drop);
+				curs_state_.grabbed = false;
+			}
+			else
+			{
+				play_jingle(Jingle::select);
+				curs_state_.grabbed = true;
+			}
 		}
 		break;
 

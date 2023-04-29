@@ -31,6 +31,7 @@ enum struct Jingle
 {
 	move_cursor,
 	select,
+	drop,
 	correct,
 	incorrect
 };

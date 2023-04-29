@@ -245,10 +245,23 @@ void play_jingle(Jingle j)
 	switch (j)
 	{
 	case Jingle::move_cursor:
-		tone(pin::buzzer, note::c6, 100);
+		tone(pin::buzzer, note::c5, 30);
 		break;
 
 	case Jingle::select:
+		tone(pin::buzzer, note::g3);
+		delay(50);
+		tone(pin::buzzer, note::e4);
+		delay(50);
+		noTone(pin::buzzer);
+		break;
+
+	case Jingle::drop:
+		tone(pin::buzzer, note::e4);
+		delay(50);
+		tone(pin::buzzer, note::g3);
+		delay(50);
+		noTone(pin::buzzer);
 		break;
 
 	case Jingle::correct:
