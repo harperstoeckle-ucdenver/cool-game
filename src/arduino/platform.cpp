@@ -179,19 +179,11 @@ void play_jingle(Jingle j)
 
 	case Jingle::correct:
 		tone(buzzer_pin, note::c4);
-		delay(100);
-		tone(buzzer_pin, note::e4);
-		delay(100);
-		tone(buzzer_pin, note::g4);
-		delay(100);
-		tone(buzzer_pin, note::c5);
-		delay(100);
-		noTone(buzzer_pin);
-		delay(100);
-		tone(buzzer_pin, note::g4);
-		delay(100);
-		tone(buzzer_pin, note::c5);
 		delay(200);
+		tone(buzzer_pin, note::ds4);
+		delay(200);
+		tone(buzzer_pin, note::b3);
+		delay(400);
 		noTone(buzzer_pin);
 		break;
 
