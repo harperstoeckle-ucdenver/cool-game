@@ -2,14 +2,11 @@
 
 #include "game.hpp"
 
+#include "pins.hpp"
+
 #include <Arduino.h>
 
 Game game;
-
-// Pins for the joystick.
-constexpr uint8_t joystick_x_pin = PIN_A0;
-constexpr uint8_t joystick_y_pin = PIN_A1;
-constexpr uint8_t joystick_button_pin = PIN_A2;
 
 // Update the state of a button and return true if it was just pressed.
 auto update_button_state(bool& state, bool new_state) -> bool
@@ -23,11 +20,11 @@ void setup()
 {
 	Serial.begin(9600);
 
-	pinMode(joystick_x_pin, INPUT);
-	pinMode(joystick_y_pin, INPUT);
-	pinMode(joystick_button_pin, INPUT_PULLUP);
+	pinMode(pin::joystick_x, INPUT);
+	pinMode(pin::joystick_y, INPUT);
+	pinMode(pin::joystick_button, INPUT_PULLUP);
 
-	pinMode(5, OUTPUT);
+	pinMode(pin::buzzer, OUTPUT);
 }
 
 void loop()
@@ -41,8 +38,8 @@ void loop()
 	static bool down_held = false;
 	static bool select_held = false;
 
-	int const x = analogRead(joystick_x_pin);
-	int const y = analogRead(joystick_y_pin);
+	int const x = analogRead(pin::joystick_x);
+	int const y = analogRead(pin::joystick_y);
 
 	// Check for new button presses.
 	bool const left_pressed = update_button_state(right_held, x < 512 - tolerance);
@@ -50,7 +47,7 @@ void loop()
 	bool const up_pressed = update_button_state(up_held, y < 512 - tolerance);
 	bool const down_pressed = update_button_state(down_held, y > 512 + tolerance);
 	bool const select_pressed =
-		update_button_state(select_held, digitalRead(joystick_button_pin) == LOW);
+		update_button_state(select_held, digitalRead(pin::joystick_button) == LOW);
 
 	if (right_pressed)
 	{

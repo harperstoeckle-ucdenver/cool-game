@@ -3,6 +3,7 @@
 
 #include "levels.hpp"
 #include "notes.hpp"
+#include "pins.hpp"
 
 #include <LiquidCrystal.h>
 #include <etl/algorithm.h>
@@ -19,7 +20,8 @@
 
 #include <stdio.h>
 
-LiquidCrystal lcd(2, 3, 4, 7, 8, 9, 10);
+LiquidCrystal lcd(pin::lcd_rs, pin::lcd_rw, pin::lcd_e, pin::lcd_d4, pin::lcd_d5, pin::lcd_d6,
+	pin::lcd_d7);
 int const start_lcd = [] {
 	lcd.begin(16, 2);
 	return 0;
@@ -164,37 +166,35 @@ void draw_level_select(int cur_level, int max_unlocked_level)
 	}
 }
 
-constexpr uint8_t buzzer_pin = 5;
-
 void play_jingle(Jingle j)
 {
 	switch (j)
 	{
 	case Jingle::move_cursor:
-		tone(buzzer_pin, note::c6, 100);
+		tone(pin::buzzer, note::c6, 100);
 		break;
 
 	case Jingle::select:
 		break;
 
 	case Jingle::correct:
-		tone(buzzer_pin, note::c4);
+		tone(pin::buzzer, note::c4);
 		delay(200);
-		tone(buzzer_pin, note::ds4);
+		tone(pin::buzzer, note::ds4);
 		delay(200);
-		tone(buzzer_pin, note::b3);
+		tone(pin::buzzer, note::b3);
 		delay(400);
-		noTone(buzzer_pin);
+		noTone(pin::buzzer);
 		break;
 
 	case Jingle::incorrect:
-		tone(buzzer_pin, note::f2);
+		tone(pin::buzzer, note::f2);
 		delay(200);
-		noTone(buzzer_pin);
+		noTone(pin::buzzer);
 		delay(100);
-		tone(buzzer_pin, note::f2);
+		tone(pin::buzzer, note::f2);
 		delay(200);
-		noTone(buzzer_pin);
+		noTone(pin::buzzer);
 		break;
 	}
 }
