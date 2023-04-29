@@ -1,6 +1,8 @@
+// vim: ft=arduino
 #include "platform.hpp"
 
 #include "levels.hpp"
+#include "notes.hpp"
 
 #include <LiquidCrystal.h>
 #include <etl/algorithm.h>
@@ -8,6 +10,12 @@
 #include <etl/functional.h>
 #include <etl/string.h>
 #include <etl/variant.h>
+
+#include <Arduino.h>
+
+// Needed because arduino for some reason defines these as macros.
+#undef max
+#undef min
 
 #include <stdio.h>
 
@@ -156,4 +164,45 @@ void draw_level_select(int cur_level, int max_unlocked_level)
 	}
 }
 
-void play_jingle([[maybe_unused]] Jingle j) {}
+constexpr uint8_t buzzer_pin = 5;
+
+void play_jingle(Jingle j)
+{
+	switch (j)
+	{
+	case Jingle::move_cursor:
+		tone(buzzer_pin, note::c6, 100);
+		break;
+
+	case Jingle::select:
+		break;
+
+	case Jingle::correct:
+		tone(buzzer_pin, note::c4);
+		delay(100);
+		tone(buzzer_pin, note::e4);
+		delay(100);
+		tone(buzzer_pin, note::g4);
+		delay(100);
+		tone(buzzer_pin, note::c5);
+		delay(100);
+		noTone(buzzer_pin);
+		delay(100);
+		tone(buzzer_pin, note::g4);
+		delay(100);
+		tone(buzzer_pin, note::c5);
+		delay(200);
+		noTone(buzzer_pin);
+		break;
+
+	case Jingle::incorrect:
+		tone(buzzer_pin, note::f2);
+		delay(200);
+		noTone(buzzer_pin);
+		delay(100);
+		tone(buzzer_pin, note::f2);
+		delay(200);
+		noTone(buzzer_pin);
+		break;
+	}
+}
