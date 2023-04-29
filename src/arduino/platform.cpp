@@ -1,11 +1,15 @@
 #include "platform.hpp"
 
-#include <LiquidCrystal.h>
+#include "levels.hpp"
 
+#include <LiquidCrystal.h>
 #include <etl/algorithm.h>
 #include <etl/array.h>
 #include <etl/functional.h>
+#include <etl/string.h>
 #include <etl/variant.h>
+
+#include <stdio.h>
 
 LiquidCrystal lcd(2, 3, 4, 7, 8, 9, 10);
 int const start_lcd = [] {
@@ -123,5 +127,33 @@ void draw_puzzle_state(Puzzle const& p, CursorState c, int level_num)
 	//lcd.print(level_num);
 }
 
-void draw_level_select([[maybe_unused]] int cur_level, [[maybe_unused]] int max_unlocked_level) {}
+void draw_level_select(int cur_level, int max_unlocked_level)
+{
+	lcd.clear();
+
+	int const min_shown = etl::max(0, cur_level - 1);
+	int const one_past_max_shown = etl::min(min_shown + 4, static_cast<int>(num_levels));
+
+	int col = 0;
+	for (int i = min_shown; i < one_past_max_shown; ++i, col += 4)
+	{
+		// Buffer for the formatted string.
+		etl::string<5> buf(4, '\0');
+		snprintf(&buf[0], 4, "%-4d", i);
+		
+		lcd.setCursor(col, 0);
+		lcd.print(buf.c_str());
+
+		lcd.setCursor(col, 1);
+		if (i == cur_level)
+		{
+			lcd.print('^');
+		}
+		else if (i > max_unlocked_level)
+		{
+			lcd.print('#');
+		}
+	}
+}
+
 void play_jingle([[maybe_unused]] Jingle j) {}
