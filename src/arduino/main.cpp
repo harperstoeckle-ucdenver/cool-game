@@ -72,4 +72,7 @@ void loop()
 	{
 		game.send_input_event(InputEvent::select);
 	}
+
+	// Prevents weird problems with repeated inputs.
+	delay(50);
 }
