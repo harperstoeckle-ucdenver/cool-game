@@ -58,6 +58,71 @@ Sprite const block_sprites[3][2] = {
 	}
 };
 
+Sprite const left_sprite = {
+	0b00000,
+	0b00000,
+	0b00000,
+	0b00000,
+	0b00000,
+	0b01000,
+	0b11000,
+	0b01000
+};
+Sprite const right_sprite = {
+	0b00000,
+	0b00000,
+	0b00000,
+	0b00000,
+	0b00000,
+	0b00100,
+	0b00110,
+	0b00100
+};
+
+Sprite const trophy_sprite = {
+	0b11111,
+	0b10101,
+	0b11111,
+	0b01110,
+	0b00100,
+	0b00100,
+	0b01110,
+	0b01110
+};
+
+Sprite const remove_sprite = {
+	0b10001,
+	0b01010,
+	0b00100,
+	0b01010,
+	0b10001,
+	0b00000,
+	0b00000,
+	0b00000
+};
+
+Sprite const flip_left_right_sprite = {
+	0b11001,
+	0b10001,
+	0b10001,
+	0b10011,
+	0b00000,
+	0b00000,
+	0b00000,
+	0b00000
+};
+
+Sprite const flip_up_down_sprite = {
+	0b11111,
+	0b10000,
+	0b00001,
+	0b01111,
+	0b00000,
+	0b00000,
+	0b00000,
+	0b00000
+};
+
 static
 auto symbol_to_char(Symbol s) -> DisplayChar
 {
@@ -77,17 +142,26 @@ auto symbol_to_char(Symbol s) -> DisplayChar
 
 		return block;
 	}
+
+	// Used for symbols with directions.
+	Sprite symbol;
 	switch (s.s.type)
 	{
 		case SymbolType::num_0: return '0';
 		case SymbolType::num_1: return '1';
 		case SymbolType::num_2: return '2';
 		case SymbolType::num_3: return '3';
-		case SymbolType::trophy: return '!';
-		case SymbolType::remove: return 'x';
-		case SymbolType::flip_up_down: return '-';
-		case SymbolType::flip_left_right: return '|';
+		case SymbolType::trophy: return trophy_sprite;
+
+		case SymbolType::remove: symbol = remove_sprite; break;
+		case SymbolType::flip_up_down: symbol = flip_up_down_sprite; break;
+		case SymbolType::flip_left_right: symbol = flip_left_right_sprite; break;
 	}
+
+	if (s.s.left) { add_to_sprite(symbol, left_sprite); }
+	if (s.s.right) { add_to_sprite(symbol, right_sprite); }
+
+	return symbol;
 }
 
 void draw_puzzle_state(Puzzle const& p, CursorState c, int level_num)
