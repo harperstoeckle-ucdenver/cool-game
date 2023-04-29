@@ -42,6 +42,10 @@ public:
 	 * output. For example, sending InputEvent::reset while in a level will reset the level.
 	 */
 	void send_input_event(InputEvent e);
+
+private:
+	// Unconditionally load the level with the given number. The cursor is put in the right spot.
+	void load_level(int level_num);
 };
 
 #endif

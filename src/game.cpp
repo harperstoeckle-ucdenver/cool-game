@@ -4,7 +4,7 @@
 
 Game::Game()
 {
-	puzzle_ = levels[cur_level_];
+	load_level(cur_level_);
 	draw_puzzle_state(puzzle_, curs_state_, cur_level_);
 }
 
@@ -74,8 +74,7 @@ void Game::send_input_event(InputEvent e)
 
 		if (in_level_select_mode_)
 		{
-			puzzle_ = levels[cur_level_];
-			curs_state_ = {0, false};
+			load_level(cur_level_);
 			in_level_select_mode_ = false;
 		}
 		else
@@ -113,8 +112,7 @@ void Game::send_input_event(InputEvent e)
 				{
 					++cur_level_;
 					last_unlocked_level_ = etl::max(cur_level_, last_unlocked_level_);
-					puzzle_ = levels[cur_level_];
-					curs_state_ = {0, false};
+					load_level(cur_level_);
 				}
 			}
 			else
@@ -133,4 +131,14 @@ void Game::send_input_event(InputEvent e)
 	{
 		draw_puzzle_state(puzzle_, curs_state_, cur_level_);
 	}
+}
+
+void Game::load_level(int level_num)
+{
+	puzzle_ = levels[level_num];
+	curs_state_ = {
+		etl::find_if(puzzle_.cbegin(), puzzle_.cend(),
+			[](auto s) { return !s.b.is_locked; }) - puzzle_.begin(),
+		false
+	};
 }
