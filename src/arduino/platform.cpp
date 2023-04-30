@@ -266,12 +266,12 @@ void play_jingle(Jingle j)
 
 	case Jingle::correct:
 		digitalWrite(pin::correct_led, HIGH);
-		tone(pin::buzzer, note::c4);
+		tone(pin::buzzer, note::d4);
+		delay(100);
+		tone(pin::buzzer, note::a3);
+		delay(100);
+		tone(pin::buzzer, note::f4);
 		delay(200);
-		tone(pin::buzzer, note::ds4);
-		delay(200);
-		tone(pin::buzzer, note::b3);
-		delay(400);
 		noTone(pin::buzzer);
 		digitalWrite(pin::correct_led, LOW);
 		break;
