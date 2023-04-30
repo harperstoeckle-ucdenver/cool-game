@@ -74,9 +74,9 @@ Sprite const right_sprite = {
 	0b00000,
 	0b00000,
 	0b00000,
-	0b00100,
-	0b00110,
-	0b00100
+	0b00010,
+	0b00011,
+	0b00010
 };
 
 Sprite const trophy_sprite = {
