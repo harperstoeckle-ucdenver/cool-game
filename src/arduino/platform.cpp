@@ -196,7 +196,7 @@ void draw_puzzle_state(Puzzle const& p, CursorState c, int level_num)
 
 		if (p[i].b.is_locked)
 		{
-			lcd.print('#');
+			lcd.write(0xdb);
 		}
 		else if (i == c.index)
 		{
@@ -235,7 +235,7 @@ void draw_level_select(int cur_level, int max_unlocked_level)
 		}
 		else if (i > max_unlocked_level)
 		{
-			lcd.print('#');
+			lcd.write(0xdb);
 		}
 	}
 }
