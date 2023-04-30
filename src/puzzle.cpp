@@ -131,7 +131,7 @@ auto is_solved(Puzzle const& p) -> bool
 	etl::copy_if(p.cbegin(), p.cend(), etl::back_inserter(numbers),
 		[](auto s) {
 			auto const type_val = static_cast<uint8_t>(s.s.type);
-			return 0 <= type_val && type_val <= 3;
+			return !s.is_block && 0 <= type_val && type_val <= 3;
 		});
 	if (!etl::is_sorted(numbers.cbegin(), numbers.cend(), 
 			[](auto a, auto b) {
