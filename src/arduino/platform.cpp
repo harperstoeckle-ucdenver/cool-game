@@ -200,7 +200,7 @@ void draw_puzzle_state(Puzzle const& p, CursorState c, int level_num)
 		}
 		else if (i == c.index)
 		{
-			lcd.print(c.grabbed ? '@' : '^');
+			lcd.print(c.grabbed ? '^' : '-');
 		}
 	}
 
@@ -231,7 +231,7 @@ void draw_level_select(int cur_level, int max_unlocked_level)
 		lcd.setCursor(col, 1);
 		if (i == cur_level)
 		{
-			lcd.print('^');
+			lcd.print('-');
 		}
 		else if (i > max_unlocked_level)
 		{
