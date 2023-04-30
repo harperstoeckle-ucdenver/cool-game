@@ -145,8 +145,8 @@ void Game::load_level(int level_num)
 {
 	puzzle_ = levels[level_num];
 	curs_state_ = {
-		etl::find_if(puzzle_.cbegin(), puzzle_.cend(),
-			[](auto s) { return !s.b.is_locked; }) - puzzle_.begin(),
+		static_cast<int>(etl::find_if(puzzle_.cbegin(), puzzle_.cend(),
+				[](auto s) { return !s.b.is_locked; }) - puzzle_.begin()),
 		false
 	};
 }

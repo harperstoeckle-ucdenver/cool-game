@@ -119,6 +119,7 @@ void play_jingle(Jingle j)
 	{
 	case Jingle::move_cursor: break;
 	case Jingle::select: break;
+	case Jingle::drop: break;
 
 	case Jingle::correct:
 		mvaddstr(2, 18, "Correct");
