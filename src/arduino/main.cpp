@@ -4,9 +4,17 @@
 
 #include "pins.hpp"
 
+#include <etl/queue.h>
+
 #include <Arduino.h>
 
 Game game;
+
+/*
+ * Queue of all input events. If the queue is full, all input events are ignored until at least one
+ * event in the queue has been processed.
+ */
+etl::queue<InputEvent, 10> input_events;
 
 // Update the state of a button and return true if it was just pressed.
 auto update_button_state(bool& state, bool new_state) -> bool
@@ -31,6 +39,13 @@ void setup()
 
 	pinMode(pin::level_select_button, INPUT_PULLUP);
 	pinMode(pin::reset_button, INPUT_PULLUP);
+
+	attachInterrupt(digitalPinToInterrupt(pin::level_select_button),
+		[] { if (!input_events.full()) { input_events.push(InputEvent::change_mode); } },
+		FALLING);
+	attachInterrupt(digitalPinToInterrupt(pin::reset_button),
+		[] { if (!input_events.full()) { input_events.push(InputEvent::reset); } },
+		FALLING);
 }
 
 void loop()
@@ -42,8 +57,6 @@ void loop()
 	static bool right_held = false;
 	static bool up_held = false;
 	static bool select_held = false;
-	static bool level_select_held = false;
-	static bool reset_held = false;
 
 	int const x = analogRead(pin::joystick_x);
 	int const y = analogRead(pin::joystick_y);
@@ -54,34 +67,29 @@ void loop()
 	bool const up_pressed = update_button_state(up_held, y < 512 - tolerance);
 	bool const select_pressed =
 		update_button_state(select_held, digitalRead(pin::joystick_button) == LOW);
-	bool const level_select_pressed =
-		update_button_state(level_select_held, digitalRead(pin::level_select_button) == LOW);
-	bool const reset_pressed =
-		update_button_state(reset_held, digitalRead(pin::reset_button) == LOW);
 
-	if (right_pressed)
+	if (left_pressed)
 	{
-		game.send_input_event(InputEvent::move_right);
+		input_events.push(InputEvent::move_left);
 	}
-	else if (left_pressed)
+	else if (right_pressed)
 	{
-		game.send_input_event(InputEvent::move_left);
+		input_events.push(InputEvent::move_right);
 	}
 	else if (up_pressed)
 	{
-		game.send_input_event(InputEvent::check_solution);
+		input_events.push(InputEvent::check_solution);
 	}
 	else if (select_pressed)
 	{
-		game.send_input_event(InputEvent::select);
+		input_events.push(InputEvent::select);
 	}
-	else if (level_select_pressed)
+
+	// Send pending input events.
+	if (!input_events.empty())
 	{
-		game.send_input_event(InputEvent::change_mode);
-	}
-	else if (reset_pressed)
-	{
-		game.send_input_event(InputEvent::reset);
+		game.send_input_event(input_events.front());
+		input_events.pop();
 	}
 
 	// Prevents weird problems with repeated inputs.
