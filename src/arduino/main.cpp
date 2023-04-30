@@ -28,6 +28,9 @@ void setup()
 
 	pinMode(pin::correct_led, OUTPUT);
 	pinMode(pin::incorrect_led, OUTPUT);
+
+	pinMode(pin::level_select_button, INPUT_PULLUP);
+	pinMode(pin::reset_button, INPUT_PULLUP);
 }
 
 void loop()
@@ -38,8 +41,9 @@ void loop()
 	static bool left_held = false;
 	static bool right_held = false;
 	static bool up_held = false;
-	static bool down_held = false;
 	static bool select_held = false;
+	static bool level_select_held = false;
+	static bool reset_held = false;
 
 	int const x = analogRead(pin::joystick_x);
 	int const y = analogRead(pin::joystick_y);
@@ -48,9 +52,12 @@ void loop()
 	bool const left_pressed = update_button_state(right_held, x < 512 - tolerance);
 	bool const right_pressed = update_button_state(left_held, x > 512 + tolerance);
 	bool const up_pressed = update_button_state(up_held, y < 512 - tolerance);
-	bool const down_pressed = update_button_state(down_held, y > 512 + tolerance);
 	bool const select_pressed =
 		update_button_state(select_held, digitalRead(pin::joystick_button) == LOW);
+	bool const level_select_pressed =
+		update_button_state(level_select_held, digitalRead(pin::level_select_button) == LOW);
+	bool const reset_pressed =
+		update_button_state(reset_held, digitalRead(pin::reset_button) == LOW);
 
 	if (right_pressed)
 	{
@@ -64,13 +71,17 @@ void loop()
 	{
 		game.send_input_event(InputEvent::check_solution);
 	}
-	else if (down_pressed)
-	{
-		game.send_input_event(InputEvent::change_mode);
-	}
 	else if (select_pressed)
 	{
 		game.send_input_event(InputEvent::select);
+	}
+	else if (level_select_pressed)
+	{
+		game.send_input_event(InputEvent::change_mode);
+	}
+	else if (reset_pressed)
+	{
+		game.send_input_event(InputEvent::reset);
 	}
 
 	// Prevents weird problems with repeated inputs.

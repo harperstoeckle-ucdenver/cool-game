@@ -21,6 +21,9 @@ inline constexpr uint8_t lcd_d7 = 10;
 
 inline constexpr uint8_t correct_led = PIN_A3;
 inline constexpr uint8_t incorrect_led = PIN_A4;
+
+inline constexpr uint8_t level_select_button = 6;
+inline constexpr uint8_t reset_button = 12;
 } // namespace pin
 
 #endif
