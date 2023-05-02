@@ -78,6 +78,46 @@ inline Puzzle const levels[] = {
 		make_special(true, false, SymbolType::remove, true)
 	},
 
+	// 9
+	{
+		make_block(0b111000, true),
+		make_block(0b111000),
+		make_special(true, true, SymbolType::remove, true),
+		make_block(0b111100),
+		make_block(0b001111),
+		make_block(0b000111),
+		make_block(0b000111, true)
+	},
+	
+	// 10
+	{
+		make_special(false, true, SymbolType::remove),
+		make_block(0b101011),
+		make_block(0b101101),
+		make_block(0b110101)
+	},
+
+	// 11
+	{
+		make_block(0b111011, true),
+		make_block(0b011100),
+		make_block(0b000111),
+		make_special(true, false, SymbolType::remove),
+		make_block(0b100100),
+		make_block(0b110111, true)
+	},
+
+	// 12 (evil?)
+	{
+		make_block(0b111010, true),
+		make_block(0b011111),
+		make_block(0b010111),
+		make_block(0b110100),
+		make_special(true, true, SymbolType::remove),
+		make_block(0b001111),
+		make_block(0b111111, true)
+	},
+
 	// ?
 	{
 		make_block(0b111011, true),
