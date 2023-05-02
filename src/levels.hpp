@@ -4,6 +4,7 @@
 
 #include "puzzle.hpp"
 
+[[gnu::__progmem__]]
 inline Puzzle const levels[] = {
 	// 0
 	{

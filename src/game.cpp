@@ -2,6 +2,8 @@
 
 #include <etl/algorithm.h>
 
+#include <avr/pgmspace.h>
+
 Game::Game()
 {
 	load_level(cur_level_);
@@ -95,7 +97,7 @@ void Game::send_input_event(InputEvent e)
 	case InputEvent::reset:
 		if (!in_level_select_mode_)
 		{
-			puzzle_ = levels[cur_level_];
+			load_level(cur_level_);
 		}
 		break;
 
@@ -143,7 +145,7 @@ void Game::send_input_event(InputEvent e)
 
 void Game::load_level(int level_num)
 {
-	puzzle_ = levels[level_num];
+	memcpy_P(&puzzle_, &levels[cur_level_], sizeof(puzzle_));
 	curs_state_ = {
 		static_cast<int>(etl::find_if(puzzle_.cbegin(), puzzle_.cend(),
 				[](auto s) { return !s.b.is_locked; }) - puzzle_.begin()),
