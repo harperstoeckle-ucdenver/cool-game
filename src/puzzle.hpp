@@ -45,6 +45,8 @@ public:
 
 	constexpr
 	auto size() const -> size_type { return size_; }
+	constexpr
+	auto ssize() const -> difference_type { return static_cast<difference_type>(size()); }
 
 	auto begin() -> iterator { return data_.begin(); }
 	constexpr
@@ -52,11 +54,11 @@ public:
 	constexpr
 	auto cbegin() const -> const_iterator { return data_.cbegin(); }
 
-	auto end() -> iterator { return begin() + size(); }
+	auto end() -> iterator { return begin() + ssize(); }
 	constexpr
-	auto end() const -> const_iterator { return begin() + size(); }
+	auto end() const -> const_iterator { return begin() + ssize(); }
 	constexpr
-	auto cend() const -> const_iterator { return cbegin() + size(); }
+	auto cend() const -> const_iterator { return cbegin() + ssize(); }
 
 	auto rend() -> reverse_iterator { return data_.rend(); }
 	constexpr
@@ -64,11 +66,11 @@ public:
 	constexpr
 	auto crend() const -> const_reverse_iterator { return data_.crend(); }
 
-	auto rbegin() -> reverse_iterator { return rend() - size(); }
+	auto rbegin() -> reverse_iterator { return rend() - ssize(); }
 	constexpr
-	auto rbegin() const -> const_reverse_iterator { return rend() - size(); }
+	auto rbegin() const -> const_reverse_iterator { return rend() - ssize(); }
 	constexpr
-	auto crbegin() const -> const_reverse_iterator { return crend() - size(); }
+	auto crbegin() const -> const_reverse_iterator { return crend() - ssize(); }
 
 	auto operator[](size_type i) -> reference { return data_[i]; }
 	constexpr

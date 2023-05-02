@@ -134,3 +134,8 @@ void play_jingle(Jingle j)
 		break;
 	}
 }
+
+auto get_level(int level_num) -> Puzzle
+{
+	return levels[level_num];
+}

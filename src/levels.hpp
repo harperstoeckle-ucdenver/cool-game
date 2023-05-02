@@ -4,8 +4,12 @@
 
 #include "puzzle.hpp"
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-attributes"
 [[gnu::__progmem__]]
+#pragma GCC diagnostic pop
 inline Puzzle const levels[] = {
+
 	// 0
 	{
 		make_special(false, false, SymbolType::num_1),
@@ -117,6 +121,11 @@ inline Puzzle const levels[] = {
 		make_special(true, true, SymbolType::remove),
 		make_block(0b001111),
 		make_block(0b111111, true)
+	},
+
+	// 13
+	{
+
 	},
 
 	// ?

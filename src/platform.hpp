@@ -39,4 +39,7 @@ enum struct Jingle
 // This plays whatever is required for the jingle. It may or may not block.
 void play_jingle(Jingle j);
 
+// Get the data for a given level number.
+auto get_level(int level_num) -> Puzzle;
+
 #endif

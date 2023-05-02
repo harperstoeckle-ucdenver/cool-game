@@ -13,6 +13,7 @@
 #include <etl/variant.h>
 
 #include <Arduino.h>
+#include <avr/pgmspace.h>
 
 // Needed because arduino for some reason defines these as macros.
 #undef max
@@ -288,4 +289,11 @@ void play_jingle(Jingle j)
 		digitalWrite(pin::incorrect_led, LOW);
 		break;
 	}
+}
+
+auto get_level(int level_num) -> Puzzle
+{
+	Puzzle p;
+	memcpy_P(&p, &levels[cur_level_], sizeof(p));
+	return p;
 }
