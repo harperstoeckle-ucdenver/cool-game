@@ -6,8 +6,8 @@
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunknown-attributes"
+
 [[gnu::__progmem__]]
-#pragma GCC diagnostic pop
 inline Puzzle const levels[] = {
 
 	// 0
@@ -142,6 +142,8 @@ inline Puzzle const levels[] = {
 		make_special(false, false, SymbolType::trophy)
 	}
 };
+
+#pragma GCC diagnostic pop
 
 // Just for convenience.
 inline constexpr size_t num_levels = sizeof(levels) / sizeof(Puzzle);

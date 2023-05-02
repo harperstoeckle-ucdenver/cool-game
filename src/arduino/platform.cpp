@@ -294,6 +294,6 @@ void play_jingle(Jingle j)
 auto get_level(int level_num) -> Puzzle
 {
 	Puzzle p;
-	memcpy_P(&p, &levels[cur_level_], sizeof(p));
+	memcpy_P(&p, &levels[level_num], sizeof(p));
 	return p;
 }
