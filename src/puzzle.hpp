@@ -38,6 +38,8 @@ public:
 	Puzzle(std::initializer_list<Symbol> init)
 	{
 		size_ = init.size();
+
+		// Unfortunately, I have to access the buffer from data_ directly to make this constexpr.
 		etl::copy_s(init.begin(), init.end(), data_._buffer, data_._buffer + size_);
 	}
 
