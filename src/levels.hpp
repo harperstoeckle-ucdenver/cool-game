@@ -125,16 +125,17 @@ inline Puzzle const levels[] = {
 
 	// 13
 	{
-
-	},
-
-	// ?
-	{
-		make_block(0b111011, true),
+		make_block(0b111011),
 		make_block(0b101110),
 		make_special(false, true, SymbolType::flip_left_right),
-		make_block(0b011100),
-		make_special(true, false, SymbolType::remove)
+	},
+
+	// 14
+	{
+		make_special(true, false, SymbolType::flip_left_right),
+		make_block(0b110101),
+		make_block(0b011110),
+		make_block(0b101011)
 	},
 
 	// Last
