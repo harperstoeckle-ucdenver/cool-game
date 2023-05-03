@@ -104,13 +104,7 @@ void Game::send_input_event(InputEvent e)
 		break;
 
 	case InputEvent::check_solution:
-		// Cheat to make things easier.
-		if (in_level_select_mode_)
-		{
-			play_jingle(Jingle::correct);
-			last_unlocked_level_ = static_cast<int>(num_levels) - 1;
-		}
-		else
+		if (!in_level_select_mode_)
 		{
 			if (is_solved(puzzle_))
 			{
