@@ -223,11 +223,11 @@ void draw_level_select(int cur_level, int max_unlocked_level)
 	for (int i = min_shown; i < one_past_max_shown; ++i, col += 4)
 	{
 		// Buffer for the formatted string.
-		etl::string<5> buf(4, '\0');
+		char buf[5];
 		snprintf(&buf[0], 4, "%-4d", i);
-		
+
 		lcd.setCursor(col, 0);
-		lcd.print(buf.c_str());
+		lcd.print(buf);
 
 		lcd.setCursor(col, 1);
 		if (i == cur_level)
