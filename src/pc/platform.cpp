@@ -22,7 +22,7 @@ auto symbol_to_utf8(Symbol s) -> Utf8Char
 		{SymbolType::num_3, "3"},
 		{SymbolType::trophy, "🏆"},
 		{SymbolType::flip_left_right, "⦶"},
-		{SymbolType::flip_up_down, "⦵"},
+		{SymbolType::flip_up_down, "§"},
 		{SymbolType::remove, "×"}
 	};
 
