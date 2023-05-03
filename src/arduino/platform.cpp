@@ -184,7 +184,7 @@ void draw_puzzle_state(Puzzle const& p, CursorState c, int level_num)
 		lcd.setCursor(i * 2, 0);
 
 		auto const dc = symbol_to_char(p[i]);
-		if (char* c = etl::get_if<char>(&dc))
+		if (char const* c = etl::get_if<char>(&dc))
 		{
 			lcd.print(*c);
 		}
