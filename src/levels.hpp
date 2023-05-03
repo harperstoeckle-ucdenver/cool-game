@@ -9,7 +9,6 @@
 
 [[gnu::__progmem__]]
 inline Puzzle const levels[] = {
-
 	// 0
 	{
 		make_special(false, false, SymbolType::num_1),
@@ -136,6 +135,56 @@ inline Puzzle const levels[] = {
 		make_block(0b110101),
 		make_block(0b011110),
 		make_block(0b101011)
+	},
+
+	// 15
+	{
+		make_block(0b111011, true),
+		make_block(0b001101),
+		make_block(0b101110),
+		make_special(true, true, SymbolType::flip_left_right),
+		make_block(0b110001, true)
+	},
+
+	// 16
+	{
+		make_block(0b111011),
+		make_block(0b011101),
+		make_block(0b100110),
+		make_special(true, false, SymbolType::remove),
+		make_block(0b011001),
+		make_special(true, true, SymbolType::flip_left_right),
+		make_block(0b100110),
+	},
+
+	// 17
+	{
+		make_block(0b111100),
+		make_block(0b110101),
+		make_special(false, true, SymbolType::flip_up_down),
+		make_block(0b111010)
+	},
+
+	// 18
+	{
+		make_block(0b010111),
+		make_block(0b111100),
+		make_special(true, false, SymbolType::flip_up_down),
+		make_block(0b010010, true),
+		make_special(false, true, SymbolType::flip_up_down),
+		make_block(0b001111),
+		make_block(0b111010)
+	},
+
+	// 19
+	{
+		make_block(0b111011, true),
+		make_block(0b011101),
+		make_special(true, true, SymbolType::flip_up_down, true),
+		make_special(false, true, SymbolType::remove),
+		make_block(0b111010),
+		make_special(true, false, SymbolType::flip_left_right),
+		make_block(0b001101)
 	},
 
 	// Last
