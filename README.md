@@ -30,8 +30,8 @@ have not tested it:
    text in quotes after that to the root of the Arduino install path on your system.
 3. Try the configuration command again.
 
-If the configuration was done successfully, the project can be built and uploaded an Arduino using
-the command
+If the configuration was done successfully, the project can be built and uploaded to an Arduino
+using the command
 
 ```sh
 SERIAL_PORT='<serial-port>' cmake --build build --target upload-cool-game
